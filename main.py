@@ -9,7 +9,7 @@ print("\n\n--- Employee Data ---")
 print(employee_location_data)
 
 # 1. Return the first and last names and the job titles for all employees in Boston.
-df_boston = pd.read_sql(""" SELECT e.firstName, e.lastName, e.jobTitle FROM employees e JOIN offices o ON e.officeCode = o.officeCode WHERE o.city = 'Boston' """, conn)
+df_boston = pd.read_sql(""" SELECT e.firstName, e.lastName FROM employees e JOIN offices o ON e.officeCode = o.officeCode WHERE o.city = 'Boston' """, conn)
 print("\n\n--- Boston Employees ---")
 print(df_boston)
 
@@ -24,7 +24,7 @@ print("\n\n--- Employees by first name and last name with the city and state of 
 print(df_employee)
 
 # 4. Return all of the customer's contact information (first name, last name, and phone number) as well as their sales rep's employee number for any customer who has not placed an order. Sort the results alphabetically based on the contact's last name (24 customers have not placed an order).
-df_contacts = pd.read_sql(""" SELECT c.contactFirstName, c.contactLastName, c.phone, c.salesRepEmployeeNumber FROM customers c LEFT JOIN orders o ON c.customerNumber = o.customerNumber WHERE o.orderNumber IS NULL """, conn)
+df_contacts = pd.read_sql(""" SELECT c.contactFirstName, c.contactLastName, c.phone, c.salesRepEmployeeNumber FROM customers c LEFT JOIN orders o ON c.customerNumber = o.customerNumber WHERE o.orderNumber IS NULL ORDER BY c.contactLastName ASC """, conn)
 print("\n\n--- All customer's who did not place an order ---")
 print(df_contacts)
 
