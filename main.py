@@ -34,7 +34,7 @@ print("\n\n--- Confirm customer payments ---")
 print(df_payment)
 
 # 6. The team wants you to identify 4 individuals. Return the employee number, first name, last name, and number of customers for employees whose customers have an average credit limit over 90k. Sort by number of customers from high to low.
-df_credit = pd.read_sql(""" SELECT e.employeeNumber, e.firstName, e.lastName, COUNT(*) AS number_of_customers FROM employees e JOIN customers c ON e.employeeNumber = c.salesRepEmployeeNumber HAVING AVG(c.creditLimit) > 90000 ORDER BY number_of_customers DESC LIMIT 4 """, conn)
+df_credit = pd.read_sql(""" SELECT e.employeeNumber, e.firstName, e.lastName, COUNT(*) AS number_of_customers FROM employees e JOIN customers c ON e.employeeNumber = c.salesRepEmployeeNumber GROUP BY e.employeeNumber HAVING AVG(c.creditLimit) > 90000 ORDER BY number_of_customers DESC LIMIT 4 """, conn)
 print("\n\n--- Customers with average credit limit over 90k ---")
 print(df_credit)
 
