@@ -54,7 +54,7 @@ print("\n\n--- customers there are per office  ---")
 print(df_customers)
 
 # 10. Using a subquery or common table expression (CTE), select the employee number, first name, last name, city of the office, and the office code for employees who sold products that have been ordered by fewer than 20 customers.
-df_under_20 = pd.read_sql(""" SELECT DISTINCT e.employeeNumber, e.firstName, e.lastName, o.city, o.officeCode FROM employees e JOIN offices o ON e.officeCode = o.officeCode JOIN customers c ON e.employeeNumber = c.salesRepEmployeeNumber JOIN orders ord ON c.customerNumber = ord.customerNumber JOIN orderdetails od ON ord.orderNumber = od.orderNumber WHERE od.productCode IN (SELECT p.productCode FROM products p JOIN orderdetails od2 ON p.productCode = od2.productCode JOIN orders o2 ON od2.orderNumber = o2.orderNumber GROUP BY p.productCode HAVING COUNT(DISTINCT o2.customerNumber) < 20) """, conn)
+df_under_20 = pd.read_sql(""" SELECT DISTINCT e.employeeNumber, e.firstName, e.lastName, o.city, o.officeCode FROM employees e JOIN offices o ON e.officeCode = o.officeCode JOIN customers c ON e.employeeNumber = c.salesRepEmployeeNumber JOIN orders ord ON c.customerNumber = ord.customerNumber JOIN orderdetails od ON ord.orderNumber = od.orderNumber WHERE od.productCode IN (SELECT p.productCode FROM products p JOIN orderdetails od2 ON p.productCode = od2.productCode JOIN orders o2 ON od2.orderNumber = o2.orderNumber GROUP BY p.productCode HAVING COUNT(DISTINCT o2.customerNumber) < 20) ORDER BY e.lastName ASC, e.firstName ASC """, conn)
 print("\n\n--- Employees who sold products by fewer than 20 customers ---")
 print(df_under_20)
 
